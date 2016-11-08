@@ -58,9 +58,5 @@ This simulation creates a separate Web Job in a different App Service to emulate
 
 The installation of the simulation creates everything except the PowerBI dashboard. This need to be done manually. (A introduction to this is also included in this document.)
 
-INSTALLATION OF THE SIMULATION
-
-DESCRIPTION OF THE INSTALLATION OF THE SIMULATION TEMPLATE (advanced)
-
 
 
