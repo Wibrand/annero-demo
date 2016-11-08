@@ -1,0 +1,1 @@
+﻿INSERT [dbo].[ValuesStore] ([Id], [Value]) VALUES (N'lastuppdatedinasset', N'Oct  3 2016  9:04AM')

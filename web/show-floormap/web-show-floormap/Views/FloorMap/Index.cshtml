@@ -1,0 +1,114 @@
+﻿@section scripts
+{
+    <script src="~/signalr/hubs"></script>
+
+<div id="chartId">
+    <div id="svg-container"></div>
+</div>
+<script>
+    d3.xml("/svg/simplace1-floor1.svg", "image/svg+xml", function (error, xml) {
+        if (error) throw error;
+
+        document.getElementById('svg-container').appendChild(xml.documentElement);
+
+        var svg = d3.select("svg").attr("preserveAspectRatio", "xMidYMid meet").classed("scaling-svg", true);
+
+    });
+
+    function updateAssetStatus(logicalName, areaId, status, timeWhenRecorded, type, isInit)
+    {
+
+        if (isInit != true) {
+            switch(type)
+            {
+                case "desk":
+                    d3.select('#desk-' + logicalName)
+                        .transition()
+                        .duration(2000)
+                        .attr("r", 20)
+                        .attr("fill", status === "Free" ? "green" : "red")
+                        .transition()
+                        .duration(10000)
+                        .attr("r", 8);
+                    break;
+                case "conferenceRoom":
+                case "toilet":
+                case "area":
+                    d3.select('#' + logicalName)
+                        .transition()
+                        .duration(1000)
+                        .attr("fill", status === "Free" ? "green" : "red");
+                    break;
+
+            }
+
+        }
+        else {
+            switch (type) {
+                case "desk":
+                    d3.select('#desk-' + logicalName)
+                        .attr("fill", status === "Free" ? "green" : "red");
+                    break;
+                case "conferenceRoom":
+                case "toilet":
+                case "area":
+                    d3.select('#' + logicalName)
+                        .attr("fill", status === "Free" ? "green" : "red");
+                    break;
+            }
+
+        }
+        d3.select("#text-status")
+         .text("Asset: " + logicalName + " Status: " + status + " Time: " + new Date(timeWhenRecorded).toLocaleString('sv-se'));
+    }
+
+    $(function () {
+
+        var assetsEventsHub = $.connection.assetsEventsHub;
+
+        function init() {
+            assetsEventsHub.server.getAllAssetsStatus().done(function (assets) {
+                console.log('Baseline state fetched. Initializing floor assets.');
+                $.each(assets, function () {
+                    updateAssetStatus(this.LogicalName, this.AreaId, this.Status, this.TimeWhenRecorded, this.Type, true);
+                });
+            });
+        }
+
+        assetsEventsHub.client.assetStatusChanged = function (asset) {
+            console.log('Asset state received. updating..');
+            updateAssetStatus(asset.LogicalName, asset.AreaId, asset.Status, asset.TimeWhenRecorded, asset.Type);
+        };
+
+        // Log connectivity events
+        $.connection.hub.connectionSlow(function () {
+            console.log('There seems to be a problem with the connection to the server..');
+        });
+        $.connection.hub.starting(function () {
+            console.log('Establishing initial connection to the server..');
+        });
+        $.connection.hub.reconnecting(function () {
+            console.log('Trying to reconnect to the server..');
+        });
+        $.connection.hub.reconnected(function () {
+            console.log('Connection to the server was restored.');
+        });
+        $.connection.hub.disconnected(function () {
+            // Restart connection after 5 seconds.
+            console.log('Connection to the server was lost. Will try to reconnect in 5 seconds.');
+            setTimeout(function () {
+                $.connection.hub.start();
+            }, 5000);
+        });
+
+        // start SignalR
+        $.connection.hub.start().done(init);
+    });
+
+   
+</script>
+}
+
+
+
+

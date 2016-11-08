@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webjob-admin-worker", "webjob-admin-worker\webjob-admin-worker.csproj", "{B8F3E2F2-2D4A-43C4-8319-9D2A47B8D1A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8F3E2F2-2D4A-43C4-8319-9D2A47B8D1A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F3E2F2-2D4A-43C4-8319-9D2A47B8D1A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F3E2F2-2D4A-43C4-8319-9D2A47B8D1A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F3E2F2-2D4A-43C4-8319-9D2A47B8D1A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

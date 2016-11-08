@@ -1,0 +1,30 @@
+﻿{
+  "messageType": "SubscribeData",
+  "timeSent": 1474027599425,
+  "list": [
+    {
+      "resourceType": "SampleList",
+      "dataSourceAddress": {
+        "resourceType": "DataSourceAddress",
+        "did": "UUID-5A8512C9537146729FA7C029E2060461",
+        "locationId": "42315",
+        "serverDid": "EUI64-002590FFFFB5A1AB",
+        "variableName": {
+          "resourceType": "VariableName",
+          "name": "unitState"
+        },
+        "instanceNumber": 0
+      },
+      "list": [
+        {
+          "resourceType": "SampleAsset",
+          "sampleTime": 1474027600536,
+          "assetState": {
+            "resourceType": "AssetState",
+            "name": "occupied"
+          }
+        }
+      ]
+    }
+  ]
+}

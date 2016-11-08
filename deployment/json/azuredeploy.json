@@ -1,0 +1,689 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "eventHubNamespaceName": {
+            "type": "string"
+        },
+        "eventHubName": {
+            "type": "string"
+        },
+        "webAppName": {
+            "type": "string"
+        },
+        "globalPrefix": {
+            "type": "string"
+        },
+        "storageAccountName": {
+            "type": "string"
+        },
+        "sqlAdministratorLoginPassword": {
+            "type": "securestring"
+        },
+        "storageKey": {
+            "type": "securestring"
+        },
+        "storageUriForDeployment": {
+            "type": "string"
+        },
+        "sqlBacPacFileName": {
+            "type": "string"
+        },
+        "webJobDeploymentFileName": {
+            "type": "string"
+        },
+        "webAppDeploymentFileName": {
+            "type": "string"
+        },
+        "simDataFileName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "defaultSASKeyName": "RootManageSharedAccessKey",
+        "yanziSendRuleName": "yanziSendRule",
+        "yanziSendRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', parameters('eventHubNamespaceName'), parameters('eventHubName'), variables('yanziSendRuleName'))]",
+        "asaListenRuleName": "asaListenRule",
+        "asaListenRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', parameters('eventHubNamespaceName'), parameters('eventHubName'), variables('asaListenRuleName'))]",
+        "consumerGroupASAName": "asaConsumerGroup",
+        "sqlServerName": "[concat(parameters('globalPrefix'), '-sqlser-', uniqueString(resourceGroup().id))]",
+        "sqlDatabaseName": "anneroDb",
+        "sqlAdministratorLogin": "[concat(parameters('globalPrefix'), '-admin')]",
+        "sbName": "[concat(parameters('globalPrefix'), '-sb-', uniqueString(resourceGroup().id))]",
+        "sbTopicEventsName": "events",
+        "sbTopicSendToEventsRuleName": "sbTopicSendToEventsRule",
+        "sbTopicSendToEventsRuleResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/topics/authorizationRules', variables('sbName'), variables('sbTopicEventsName'), variables('sbTopicSendToEventsRuleName'))]",
+        "sbTopicListenToEventsRuleName": "sbTopicListenToEventsRule",
+        "sbTopicListenToEventsRuleResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/topics/authorizationRules', variables('sbName'), variables('sbTopicEventsName'), variables('sbTopicListenToEventsRuleName'))]",
+        "sbTopicAdminName": "admin-messages",
+        "sbTopicListenToAdminRuleName": "sbTopicListenToAdminRule",
+        "sbTopicListenToAdminRuleResourceId": "[resourceId('Microsoft.ServiceBus/namespaces/topics/authorizationRules', variables('sbName'), variables('sbTopicAdminName'), variables('sbTopicListenToAdminRuleName'))]",
+        "sbEventSubscriptionName": "sub-event-web",
+        "sbAdminSubscriptionName": "admin-messages-subscription",
+        "appServicePlanName": "[concat('ap-', uniqueString(resourceGroup().id))]",
+        "appServicePlanForSimulatorName": "[concat('apsim-', uniqueString(resourceGroup().id))]",
+        "webAppNameForSimulator": "[concat('simulator-', uniqueString(resourceGroup().id))]",
+        "sqlBacPacFullUri": "[concat(parameters('storageUriForDeployment'), '/', parameters('sqlBacPacFileName'))]",
+        "simulatorDataFullUri": "[concat(parameters('storageUriForDeployment'), '/', parameters('simDataFileName'))]",
+        "webjobDeploymentFullUri": "[concat(parameters('storageUriForDeployment'), '/', parameters('webJobDeploymentFileName'))]",
+        "webAppDeploymentFullUri": "[concat(parameters('storageUriForDeployment'), '/', parameters('webAppDeploymentFileName'))]",
+        "asaTransformJobName": "[concat('transform-', uniqueString(resourceGroup().id))]",
+        "storageAccountResourceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-08-01",
+            "name": "[variables('appServicePlanForSimulatorName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "S1",
+                "tier": "Standard",
+                "size": "S1",
+                "family": "S",
+                "capacity": 1
+            }
+        },
+        {
+            "apiVersion": "2015-08-01",
+            "name": "[variables('webAppNameForSimulator')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanForSimulatorName'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', variables('sqlServerName'), variables('sqlDatabaseName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanForSimulatorName'))]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "MSDeploy",
+                    "type": "extensions",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', variables('webAppNameForSimulator'))]"
+                    ],
+                    "properties": {
+                        "packageUri": "[variables('webjobDeploymentFullUri')]"
+                    }
+                },
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "web",
+                    "type": "config",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', variables('webAppNameForSimulator'))]"
+                    ],
+                    "properties": {
+                        "alwaysOn": true
+                    }
+                },
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "appsettings",
+                    "type": "config",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', variables('webAppNameForSimulator'))]"
+                    ],
+                    "properties": {
+                        "UrlToListOfSimulatedDevices": "[variables('simulatorDataFullUri')]"
+                    }
+                },
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "connectionstrings",
+                    "type": "config",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', variables('webAppNameForSimulator'))]",
+                        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlServerName'), variables('sqlDatabaseName'))]"
+                    ],
+                    "properties": {
+                        "EventHubSendConnectionString": {
+                            "value": "[listkeys(variables('yanziSendRuleResourceId'), '2015-08-01').primaryConnectionString]",
+                            "type": "Custom"
+                        },
+                        "SqlConnectionString": {
+                            "value": "[concat('Server=tcp:', variables('sqlServerName'),'.database.windows.net,1433;Initial Catalog=', variables('sqlDatabaseName'), ';Persist Security Info=False;User ID=', variables('sqlAdministratorLogin'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
+                            "type": "SQLAzure"
+                        },
+                        "storageAccountKey": {
+                            "value": "[parameters('storageKey')]",
+                            "type": "Custom"
+                        },
+                        "storageAccountName": {
+                            "value": "[parameters('storageAccountName')]",
+                            "type": "Custom"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "apiVersion": "2015-08-01",
+            "name": "[variables('appServicePlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "S1",
+                "tier": "Standard",
+                "size": "S1",
+                "family": "S",
+                "capacity": 1
+            }
+        },
+        {
+            "apiVersion": "2015-08-01",
+            "name": "[parameters('webAppName')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', variables('sqlServerName'), variables('sqlDatabaseName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "web",
+                    "type": "config",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+                    ],
+                    "properties": {
+                        "webSocketsEnabled": true,
+                        "alwaysOn": true
+                    }
+                },
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "MSDeploy",
+                    "type": "extensions",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+                    ],
+                    "properties": {
+                        "packageUri": "[variables('webAppDeploymentFullUri')]"
+                    }
+                },
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "appsettings",
+                    "type": "config",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+                    ],
+                    "properties": {
+                        "Microsoft.ServiceBus.Topic": "[variables('sbTopicEventsName')]",
+                        "Microsoft.ServiceBus.Subscription": "[variables('sbEventSubscriptionName')]"
+                    }
+                },
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "connectionstrings",
+                    "type": "config",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]",
+                        "[resourceId('Microsoft.Sql/servers/databases', variables('sqlServerName'), variables('sqlDatabaseName'))]",
+                        "[resourceId('Microsoft.ServiceBus/namespaces/topics/authorizationRules', variables('sbName'), variables('sbTopicEventsName'), variables('sbTopicListenToEventsRuleName'))]",
+                        "[resourceId('Microsoft.ServiceBus/namespaces/topics/authorizationRules', variables('sbName'), variables('sbTopicAdminName'), variables('sbTopicListenToAdminRuleName'))]"
+                    ],
+                    "properties": {
+                        "SqlConnectionString": {
+                            "value": "[concat('Server=tcp:', variables('sqlServerName'),'.database.windows.net,1433;Initial Catalog=', variables('sqlDatabaseName'), ';Persist Security Info=False;User ID=', variables('sqlAdministratorLogin'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
+                            "type": "SQLAzure"
+                        },
+                        "ServiceBusAdminConnectionString": {
+                            "value": "[listkeys(variables('sbTopicListenToAdminRuleResourceId'), '2015-08-01').primaryConnectionString]",
+                            "type": "Custom"
+                        },
+                        "Microsoft.ServiceBus.ConnectionString": {
+                            "value": "[listkeys(variables('sbTopicListenToEventsRuleResourceId'), '2015-08-01').primaryConnectionString]",
+                            "type": "Custom"
+                        },
+                        "AzureWebJobsStorage": {
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', parameters('storageKey'))]",
+                            "type": "Custom"
+                        },
+                        "AzureWebJobsDashboard": {
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', parameters('storageKey'))]",
+                            "type": "Custom"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.EventHub/namespaces",
+            "sku": {
+                "name": "Standard",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "kind": "EventHub",
+            "name": "[parameters('eventHubNamespaceName')]",
+            "apiVersion": "2015-08-01",
+            "location": "[variables('location')]",
+            "resources": [
+                {
+                    "type": "AuthorizationRules",
+                    "name": "[variables('defaultSASKeyName')]",
+                    "apiVersion": "2015-08-01",
+                    "properties": {
+                        "rights": [
+                            "Listen",
+                            "Manage",
+                            "Send"
+                        ]
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.EventHub/namespaces', parameters('eventHubNamespaceName'))]"
+                    ]
+                },
+                {
+                    "type": "eventhubs",
+                    "name": "[parameters('eventHubName')]",
+                    "apiVersion": "2015-08-01",
+                    "properties": {
+                        "messageRetentionInDays": 1,
+                        "partitionCount": 4,
+                        "archivedescription": {
+                            "enabled": "true",
+                            "encoding": "Avro",
+                            "intervalInSeconds": "300",
+                            "sizeLimitInBytes": "314572800",
+                            "destination": {
+                                "name": "EventHubArchive.AzureBlockBlob",
+                                "properties": {
+                                    "storageAccountResourceId": "[variables('storageAccountResourceId')]",
+                                    "blobContainer": "eventhub-archive"
+                                }
+                            }
+                        }
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.EventHub/namespaces', parameters('eventHubNamespaceName'))]"
+                    ],
+                    "resources": [
+                        {
+                            "type": "authorizationRules",
+                            "name": "[variables('yanziSendRuleName')]",
+                            "apiVersion": "2015-08-01",
+                            "properties": {
+                                "rights": [
+                                    "Send"
+                                ]
+                            },
+                            "dependsOn": [
+                                "[resourceId('Microsoft.EventHub/namespaces', parameters('eventHubNamespaceName'))]",
+                                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('eventHubNamespaceName'), parameters('eventHubName'))]"
+                            ]
+                        },
+                        {
+                            "type": "authorizationRules",
+                            "name": "[variables('asaListenRuleName')]",
+                            "apiVersion": "2015-08-01",
+                            "location": "[variables('location')]",
+                            "properties": {
+                                "rights": [
+                                    "Listen"
+                                ]
+                            },
+                            "dependsOn": [
+                                "[resourceId('Microsoft.EventHub/namespaces', parameters('eventHubNamespaceName'))]",
+                                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('eventHubNamespaceName'), parameters('eventHubName'))]",
+                                "[resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', parameters('eventHubNamespaceName'), parameters('eventHubName'), variables('yanziSendRuleName'))]"
+                            ]
+                        },
+                        {
+                            "type": "consumergroups",
+                            "name": "[variables('consumerGroupASAName')]",
+                            "apiVersion": "2015-08-01",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.EventHub/namespaces', parameters('eventHubNamespaceName'))]",
+                                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('eventHubNamespaceName'), parameters('eventHubName'))]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "2014-04-01-preview",
+            "name": "[variables('sqlServerName')]",
+            "type": "Microsoft.Sql/servers",
+            "location": "[variables('location')]",
+            "properties": {
+                "administratorLogin": "[variables('sqlAdministratorLogin')]",
+                "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+                "version": "12.0"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2014-04-01-preview",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+                    ],
+                    "location": "[variables('location')]",
+                    "name": "AllowAllWindowsAzureIps",
+                    "properties": {
+                        "startIpAddress": "0.0.0.0",
+                        "endIpAddress": "0.0.0.0"
+                    },
+                    "type": "firewallrules"
+                },
+                {
+                    "type": "databases",
+                    "name": "[variables('sqlDatabaseName')]",
+                    "apiVersion": "2014-04-01-preview",
+                    "location": "[variables('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+                    ],
+                    "properties": {
+                        "collation": "SQL_Latin1_General_CP1_CI_AS",
+                        "edition": "Standard",
+                        "requestedServiceObjectiveId": "1B1EBD4D-D903-4BAA-97F9-4EA675F5E928"
+                    },
+                    "resources": [
+                        {
+                            "name": "myimport",
+                            "type": "extensions",
+                            "apiVersion": "2014-04-01-preview",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Sql/servers/databases', variables('sqlServerName'), variables('sqlDatabaseName'))]"
+                            ],
+                            "tags": {
+                                "displayName": "myimport"
+                            },
+                            "properties": {
+                                "storageKeyType": "Primary",
+                                "storageKey": "[parameters('storageKey')]",
+                                "storageUri": "[variables('sqlBacPacFullUri')]",
+                                "administratorLogin": "[variables('sqlAdministratorLogin')]",
+                                "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+                                "operationMode": "Import"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "2015-08-01",
+            "name": "[variables('sbName')]",
+            "location": "[variables('location')]",
+            "type": "Microsoft.ServiceBus/namespaces",
+            "sku": {
+                "name": "Standard",
+                "tier": "Standard"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "[variables('sbTopicEventsName')]",
+                    "location": "[variables('location')]",
+                    "type": "topics",
+                    "dependsOn": [
+                        "[concat('Microsoft.ServiceBus/namespaces/', variables('sbName'))]"
+                    ],
+                    "properties": {
+                        "path": "[variables('sbTopicEventsName')]"
+                    },
+                    "resources": [
+                        {
+                            "apiVersion": "2015-08-01",
+                            "name": "[variables('sbEventSubscriptionName')]",
+                            "type": "subscriptions",
+                            "properties": {
+                                "requiresSession": false,
+                                "deadLetteringOnMessageExpiration": false,
+                                "enableBatchedOperations": false,
+                                "defaultMessageTimeToLive": "1.00:00:00.0"
+                            },
+                            "dependsOn": [
+                                "[variables('sbTopicEventsName')]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "2015-08-01",
+                            "name": "[variables('sbTopicSendToEventsRuleName')]",
+                            "type": "authorizationRules",
+                            "dependsOn": [
+                                "[variables('sbTopicEventsName')]"
+                            ],
+                            "properties": {
+                                "rights": [
+                                    "Send"
+                                ]
+                            }
+                        },
+                        {
+                            "apiVersion": "2015-08-01",
+                            "name": "[variables('sbTopicListenToEventsRuleName')]",
+                            "type": "authorizationRules",
+                            "dependsOn": [
+                                "[variables('sbTopicEventsName')]"
+                            ],
+                            "properties": {
+                                "rights": [
+                                    "Listen"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "[variables('sbTopicAdminName')]",
+                    "location": "[variables('location')]",
+                    "type": "topics",
+                    "dependsOn": [
+                        "[concat('Microsoft.ServiceBus/namespaces/', variables('sbName'))]"
+                    ],
+                    "properties": {
+                        "path": "[variables('sbTopicAdminName')]"
+                    },
+                    "resources": [
+                        {
+                            "apiVersion": "2015-08-01",
+                            "name": "[variables('sbAdminSubscriptionName')]",
+                            "type": "subscriptions",
+                            "properties": {
+                                "requiresSession": false,
+                                "deadLetteringOnMessageExpiration": false,
+                                "enableBatchedOperations": false,
+                                "defaultMessageTimeToLive": "1.00:00:00.0"
+                            },
+                            "dependsOn": [
+                                "[variables('sbTopicAdminName')]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "2015-08-01",
+                            "name": "[variables('sbTopicListenToAdminRuleName')]",
+                            "type": "authorizationRules",
+                            "dependsOn": [
+                                "[variables('sbTopicAdminName')]"
+                            ],
+                            "properties": {
+                                "rights": [
+                                    "Listen",
+                                    "Send",
+                                    "Manage"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "2016-03-01",
+            "name": "[variables('asaTransformJobName')]",
+            "type": "Microsoft.StreamAnalytics/StreamingJobs",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('eventHubNamespaceName'), parameters('eventHubName'))]",
+                "[resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', parameters('eventHubNamespaceName'), parameters('eventHubName'), variables('asaListenRuleName'))]",
+                "[resourceId('Microsoft.ServiceBus/namespaces/topics/authorizationRules', variables('sbName'), variables('sbTopicEventsName'), variables('sbTopicSendToEventsRuleName'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', variables('sqlServerName'), variables('sqlDatabaseName'))]"
+            ],
+            "properties": {
+                "sku": {
+                    "name": "Standard"
+                },
+                "eventsOutOfOrderPolicy": "adjust",
+                "outputStartMode": "JobStartTime",
+                "outputErrorPolicy": "stop",
+                "eventsOutOfOrderMaxDelayInSeconds": 0,
+                "eventsLateArrivalMaxDelayInSeconds": 5,
+                "inputs": [
+                    {
+                        "name": "input-eventhub",
+                        "dependsOn": [
+                            "[resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', parameters('eventHubNamespaceName'), parameters('eventHubName'), variables('asaListenRuleName'))]"
+                        ],
+                        "properties": {
+                            "type": "stream",
+                            "serialization": {
+                                "type": "JSON",
+                                "properties": {
+                                    "encoding": "UTF8"
+                                }
+                            },
+                            "datasource": {
+                                "type": "Microsoft.ServiceBus/EventHub",
+                                "properties": {
+                                    "serviceBusNamespace": "[parameters('eventHubNamespaceName')]",
+                                    "sharedAccessPolicyName": "[variables('asaListenRuleName')]",
+                                    "sharedAccessPolicyKey": "[listkeys(variables('asaListenRuleResourceId'), '2015-08-01').primaryKey]",
+                                    "eventHubName": "[parameters('eventHubName')]",
+                                    "consumerGroupName": "[variables('consumerGroupASAName')]"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "input-ref-asset",
+                        "properties": {
+                            "type": "reference",
+                            "serialization": {
+                                "type": "json",
+                                "properties": {
+                                    "encoding": "UTF8"
+                                }
+                            },
+                            "datasource": {
+                                "type": "Microsoft.Storage/Blob",
+                                "properties": {
+                                    "storageAccounts": [
+                                        {
+                                            "accountName": "[parameters('storageAccountName')]",
+                                            "accountKey": "[parameters('storageKey')]"
+                                        }
+                                    ],
+                                    "dateFormat": "yyyy-MM-dd",
+                                    "timeFormat": "HH-mm",
+                                    "pathPattern": "assets/{date}/{time}/asset.json",
+                                    "container": "asa-refdata"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "output-sql-latest-sample",
+                        "properties": {
+                            "datasource": {
+                                "type": "Microsoft.Sql/Server/Database",
+                                "properties": {
+                                    "server": "[concat(variables('sqlServerName'))]",
+                                    "database": "[variables('sqlDatabaseName')]",
+                                    "table": "LastKnownSampleStatus",
+                                    "user": "[variables('sqlAdministratorLogin')]",
+                                    "password": "[parameters('sqlAdministratorLoginPassword')]"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "output-sql-periodic-sample",
+                        "properties": {
+                            "datasource": {
+                                "type": "Microsoft.Sql/Server/Database",
+                                "properties": {
+                                    "server": "[concat(variables('sqlServerName'))]",
+                                    "database": "[variables('sqlDatabaseName')]",
+                                    "table": "Sample",
+                                    "user": "[variables('sqlAdministratorLogin')]",
+                                    "password": "[parameters('sqlAdministratorLoginPassword')]"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "output-sb-events",
+                        "dependsOn": [
+                            "[resourceId('Microsoft.ServiceBus/namespaces/topics/authorizationRules', variables('sbName'), variables('sbTopicEventsName'), variables('sbTopicSendToEventsRuleName'))]"
+                        ],
+                        "properties": {
+                            "serialization": {
+                                "type": "json",
+                                "properties": {
+                                    "encoding": "UTF8"
+                                }
+                            },
+                            "datasource": {
+                                "type": "Microsoft.ServiceBus/Topic",
+                                "properties": {
+                                    "serviceBusNamespace": "[variables('sbName')]",
+                                    "sharedAccessPolicyName": "[variables('sbTopicSendToEventsRuleName')]",
+                                    "sharedAccessPolicyKey": "[listkeys(variables('sbTopicSendToEventsRuleResourceId'), '2015-08-01').primaryKey]",
+                                    "topicName": "[variables('sbTopicEventsName')]"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "transformation": {
+                    "name": "asaTransformQuery",
+                    "properties": {
+                        "query": "WITH\r\n    Sample AS (\r\n        SELECT\r\n            DATEADD(Millisecond, II.timeSent, '1970-01-01T00:00:00Z') AS SampleTime,\r\n            SampleList.ArrayValue AS SampleList\r\n        FROM [input-eventhub] AS II\r\n        TIMESTAMP BY DATEADD(Millisecond, timeSent, '1970-01-01T00:00:00Z')\r\n        CROSS APPLY GetArrayElements(II.list) AS SampleList\r\n        WHERE II.messageType = 'SubscribeData'\r\n    ),\r\n    ReadingStatus AS (\r\n        SELECT\r\n            Sample.SampleList.dataSourceAddress.did AS Did,\r\n            Sample.SampleTime AS SampleTime,\r\n            SampleList.ArrayValue.resourceType AS Type,\r\n            SampleList.ArrayValue.value AS Value,\r\n            SampleList.ArrayValue.assetState.name AS State\r\n        FROM Sample\r\n        CROSS APPLY GetArrayElements(Sample.SampleList.list) AS SampleList\r\n        WHERE SampleList.ArrayValue.resourceType <> 'SampleMotion'\r\n    ),\r\n    ReadingEvent AS (\r\n        SELECT\r\n            Sample.SampleList.dataSourceAddress.did AS Did,\r\n            Sample.SampleTime AS SampleTime,\r\n            SampleList.ArrayValue.resourceType AS Type,\r\n            SampleList.ArrayValue.assetState.name AS State\r\n        FROM Sample\r\n        CROSS APPLY GetArrayElements(Sample.SampleList.list) AS SampleList\r\n        WHERE SampleList.ArrayValue.resourceType = 'SampleAsset'\r\n    ),\r\n    LastInWindow as\r\n    (\r\n        select r.Did,max(SampleTime) as LastEventTime\r\n        from [ReadingStatus] as r\r\n        group by r.Did, tumblingwindow(minute, 10)\r\n    )\r\n\r\nSELECT\r\n   r.Did,\r\n   ir.logicalName,\r\n   r.Type,\r\n   ir.lastUpdated,\r\n   ir.internalAssetId,\r\n   r.State,\r\n   ir.category,\r\n   ir.subBategory,\r\n   ir.areaId,\r\n   ir.floorId,\r\n   ir.buildingId, \r\n   System.Timestamp as time\r\nINTO\r\n    [output-sb-events]\r\nFROM\r\n    [ReadingEvent] AS r\r\n  JOIN [input-ref-asset] AS ir ON r.Did = ir.externalAssetId\r\n\r\n select\r\n    ir.internalAssetId as InternalAssetId,\r\n    case\r\n        when (ir.type = 'area') or (ir.type = 'desk') or (ir.type = 'toilet') or (ir.type = 'conferenceRoom') then r.State\r\n        else null\r\n    end as StatusChar,\r\n    case\r\n        when (ir.type = 'carbonDioxide') then r.Value\r\n        else null\r\n    end as StatusInt,\r\n    case\r\n        when (ir.type = 'temp') then r.Value - 273.15\r\n        else r.Value\r\n    end as StatusDecimal,\r\n    r.SampleTime as SampleTime\r\ninto\r\n    [output-sql-latest-sample]\r\nfrom\r\n    [ReadingStatus] AS r\r\n    JOIN [input-ref-asset] AS ir ON r.Did = ir.externalAssetId\r\n\r\nselect\r\n    ir.internalAssetId as InternalAssetId,\r\n    System.Timestamp as SampleCollectedTime,\r\n    case\r\n        when (ir.type = 'carbonDioxide') then r.Value\r\n        else null\r\n    end as StatusInt,\r\n    case\r\n        when (ir.type = 'temp') then r.Value - 273.15\r\n        else r.Value\r\n    end as StatusDecimal,\r\n    r.SampleTime as SampleTime\r\ninto\r\n    [output-sql-periodic-sample]\r\nfrom\r\n    [ReadingStatus] AS r\r\n    join [input-ref-asset] AS ir ON r.Did = ir.externalAssetId\r\n    join [LastInWindow]\r\n    on datediff(minute, r, LastInWindow) between 0 and 10\r\n    and r.SampleTime = LastInWindow.LastEventtime\r\nwhere (ir.type != 'area' ) and (ir.type != 'desk') and (ir.type != 'toilet') and (ir.type != 'conferenceRoom')\r\n",
+                        "streamingUnits": 1
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "sqlServerName": {
+            "type": "string",
+            "value": "[variables('sqlServerName')]"
+        },
+        "sqlDatabaseName": {
+            "type": "string",
+            "value": "[variables('sqlDatabaseName')]"
+        },
+        "sqlAdmin": {
+            "type": "string",
+            "value": "[variables('sqlAdministratorLogin')]"
+        },
+        "sqlAdminPassword": {
+            "type": "string",
+            "value": "[parameters('sqlAdministratorLoginPassword')]"
+        },
+        "yanziSasRule": {
+            "type": "string",
+            "value": "[listkeys(variables('yanziSendRuleResourceId'), '2015-08-01').primaryConnectionString]"
+        },
+        "sbReferenceTest": {
+            "type": "object",
+            "value": "[reference(concat('Microsoft.ServiceBus/namespaces/', variables('sbName')), '2015-08-01')]"
+        }
+    }
+}

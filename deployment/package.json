@@ -1,0 +1,16 @@
+{
+  "name": "deploy-yanzi-iot-simulation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deploy.js",
+  "scripts": {
+    "start": "node deploy"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "password-generator": "^2.0.2",
+    "readline-sync": "^1.4.4",
+    "shelljs": "^0.7.4"
+  }
+}

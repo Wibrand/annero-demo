@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="344.22293mm"
+   height="254.52916mm"
+   viewBox="0 0 1219.6876 901.87497"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="simplace1-floor1.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="612.59451"
+     inkscape:cy="302.88388"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3377" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="background"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-1.5848215,-84.281845)"
+     sodipodi:insensitive="true">
+    <!-- 
+      This could be destroyed in inkscape
+      xlink:href="/svg/simplace1-floor1.png"
+    -->
+    <image
+       sodipodi:absref="C:\git\annero\web\show-floormap\web-show-floormap\svg\simplace1-floor1.png"
+       xlink:href="/svg/simplace1-floor1.png"
+       y="84.281845"
+       x="1.5848215"
+       id="image3355"
+       preserveAspectRatio="none"
+       height="901.875"
+       width="1219.6875" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="areas"
+     style="opacity:0.5">
+    <circle
+       id="desk-1c20"
+       cx="57.073654"
+       cy="101.32903"
+       r="8.586297"
+       style="" />
+    <circle
+       id="desk-1c19"
+       cx="115.1574"
+       cy="100.84426"
+       r="8.586298"
+       style="" />
+    <circle
+       id="desk-1c18"
+       cx="117.1777"
+       cy="175.57527"
+       r="8.586298"
+       style="" />
+    <circle
+       id="desk-1c17"
+       cx="56.649765"
+       cy="175.59555"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c16"
+       cx="58.588844"
+       cy="254.36717"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c15"
+       cx="116.16756"
+       cy="255.37733"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c13"
+       cx="57.578705"
+       cy="328.10831"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c14"
+       cx="116.16756"
+       cy="327.09814"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c12"
+       cx="57.578705"
+       cy="408.94083"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c11"
+       cx="116.14725"
+       cy="409.91037"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c09"
+       cx="57.598995"
+       cy="483.67181"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c10"
+       cx="117.1371"
+       cy="483.65152"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c08"
+       cx="58.588844"
+       cy="561.45355"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c07"
+       cx="116.14725"
+       cy="563.47388"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c05"
+       cx="57.599007"
+       cy="637.21503"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c06"
+       cx="116.16756"
+       cy="638.22516"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c04"
+       cx="57.578701"
+       cy="717.01709"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c03"
+       cx="115.1574"
+       cy="716.0069"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c01"
+       cx="58.56855"
+       cy="791.74805"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c02"
+       cx="115.1574"
+       cy="790.75824"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c21"
+       cx="176.75641"
+       cy="80.620903"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c22"
+       cx="177.78687"
+       cy="139.20976"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c24"
+       cx="250.51785"
+       cy="81.610748"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c23"
+       cx="251.52802"
+       cy="139.20976"
+       r="8.5862989"
+       style="" />
+    <circle
+       id="desk-1c25"
+       cx="639.42664"
+       cy="141.23006"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c26"
+       cx="714.17792"
+       cy="141.23006"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c27"
+       cx="767.716"
+       cy="141.23007"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c28"
+       cx="841.43689"
+       cy="141.20976"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c29"
+       cx="1048.5181"
+       cy="101.83411"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c30"
+       cx="989.96985"
+       cy="100.82396"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c32"
+       cx="1047.5486"
+       cy="174.5854"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c31"
+       cx="989.94958"
+       cy="174.56511"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c33"
+       cx="1046.5182"
+       cy="254.36716"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c34"
+       cx="990.93945"
+       cy="255.35701"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c36"
+       cx="1047.5486"
+       cy="330.1286"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c35"
+       cx="990.95978"
+       cy="329.11847"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c37"
+       cx="1047.5283"
+       cy="408.90024"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c38"
+       cx="990.93939"
+       cy="409.93066"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c40"
+       cx="1048.5385"
+       cy="483.67184"
+       r="8.5862999"
+       style="" />
+    <circle
+       id="desk-1c39"
+       cx="989.94958"
+       cy="482.66168"
+       r="8.5862999"
+       style="" />
+    <path
+       d="m 325,231.87491 125,0 70,140 -75,40 0,95 -120,0 z"
+       id="conf1049"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 530,381.87491 -75,35 0,90 140,0 z"
+       id="conf1048"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 225,266.87491 90,0 0,55 -90,0 z"
+       id="room1059"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 225,331.87491 90,0 0,110 -90,0 z"
+       id="conf1060"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 225,451.87491 90,0 0,110 -90,0 0,-110 0,0"
+       id="conf1061"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 315,571.87491 -90,0 0,55 90,0 z"
+       id="room1062"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 325,516.87491 0,150 295,0 0,-110 -25,-40 z"
+       id="conf1047"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 490,741.87491 140,0 0,130 -140,0 z"
+       id="conf1032"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 640,741.87491 70,0 70,140 -140,0 z"
+       id="conf1030"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 750,271.87491 60,0 0,40 -60,0 z"
+       id="wc1040"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 820,251.87491 60,0 0,60 -60,0 z"
+       id="wc1041"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 970,571.87491 50,0 0,80 -50,0 z"
+       id="room1051"
+       inkscape:connector-curvature="0"
+       style="" />
+    <path
+       d="m 1030,571.87491 60,0 0,80 -60,0 z"
+       id="room1050"
+       inkscape:connector-curvature="0"
+       style="" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="information"
+     sodipodi:insensitive="true">
+    <text
+       xml:space="preserve"
+       x="7.5569053"
+       y="-1119.7592"
+       id="text-status"
+       transform="matrix(0,1,-0.99999998,0,0,0)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.00000191px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start"
+       sodipodi:linespacing="125%">        -- DEBUG INFORMATION --       </text>
+  </g>
+</svg>
