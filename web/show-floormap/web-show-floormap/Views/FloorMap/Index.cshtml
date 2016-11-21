@@ -22,7 +22,7 @@
             switch(type)
             {
                 case "desk":
-                    d3.select('#desk-' + logicalName)
+                    d3.select('#' + logicalName)
                         .transition()
                         .duration(2000)
                         .attr("r", 20)
@@ -46,7 +46,7 @@
         else {
             switch (type) {
                 case "desk":
-                    d3.select('#desk-' + logicalName)
+                    d3.select('#' + logicalName)
                         .attr("fill", status === "Free" ? "green" : "red");
                     break;
                 case "conferenceRoom":

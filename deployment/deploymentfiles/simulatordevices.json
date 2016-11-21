@@ -221,7 +221,7 @@
   },
   {
     "externalAssetId": "UUID-D5CB7AFEDEBC4C9AAB2FB8612B24C9DB",
-    "logicalName": "1c01",
+    "logicalName": "desk1c01",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -232,7 +232,7 @@
   },
   {
     "externalAssetId": "UUID-B8031A2BEA2241B49BCB745312F75091",
-    "logicalName": "1c02",
+    "logicalName": "desk1c02",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -243,7 +243,7 @@
   },
   {
     "externalAssetId": "UUID-C6A4852A2F564A7BA3F2B8555392119F",
-    "logicalName": "1c03",
+    "logicalName": "desk1c03",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -254,7 +254,7 @@
   },
   {
     "externalAssetId": "UUID-47CB22784BF14CEBA1633EB9F8269AC4",
-    "logicalName": "1c04",
+    "logicalName": "desk1c04",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -265,7 +265,7 @@
   },
   {
     "externalAssetId": "UUID-C4DF72307256432BBB38C40470F6B316",
-    "logicalName": "1c05",
+    "logicalName": "desk1c05",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -276,7 +276,7 @@
   },
   {
     "externalAssetId": "UUID-CB341B8E380C44D6BDFDE030D8A3F805",
-    "logicalName": "1c06",
+    "logicalName": "desk1c06",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -287,7 +287,7 @@
   },
   {
     "externalAssetId": "UUID-50F73DD1EE274EAD83D437595BBFB5CF",
-    "logicalName": "1c07",
+    "logicalName": "desk1c07",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -298,7 +298,7 @@
   },
   {
     "externalAssetId": "UUID-8239C2494BB34140BD0CA662E832F0BF",
-    "logicalName": "1c08",
+    "logicalName": "desk1c08",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -309,7 +309,7 @@
   },
   {
     "externalAssetId": "UUID-00D74D04BC1D477491AD2C7E06E77F6A",
-    "logicalName": "1c09",
+    "logicalName": "desk1c09",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -320,7 +320,7 @@
   },
   {
     "externalAssetId": "UUID-4BABB9F5458B49CE887515C2471B9D0E",
-    "logicalName": "1c10",
+    "logicalName": "desk1c10",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -331,7 +331,7 @@
   },
   {
     "externalAssetId": "UUID-8EE556D0A70E40C38E3AEFA7AEAD202D",
-    "logicalName": "1c11",
+    "logicalName": "desk1c11",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -342,7 +342,7 @@
   },
   {
     "externalAssetId": "UUID-5A8512C9537146729FA7C029E2060461",
-    "logicalName": "1c12",
+    "logicalName": "desk1c12",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -353,7 +353,7 @@
   },
   {
     "externalAssetId": "UUID-D7C8E137558A483EB675B99503AFE15D",
-    "logicalName": "1c13",
+    "logicalName": "desk1c13",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -364,7 +364,7 @@
   },
   {
     "externalAssetId": "UUID-1919BD74410043A391B072ED45C1224F",
-    "logicalName": "1c14",
+    "logicalName": "desk1c14",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -375,7 +375,7 @@
   },
   {
     "externalAssetId": "UUID-ACFCAC26CFC5441EBFCD0CFE199F2587",
-    "logicalName": "1c15",
+    "logicalName": "desk1c15",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -386,7 +386,7 @@
   },
   {
     "externalAssetId": "UUID-4BFFFD49C140478DBBAB63576250BB1E",
-    "logicalName": "1c16",
+    "logicalName": "desk1c16",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -397,7 +397,7 @@
   },
   {
     "externalAssetId": "UUID-475C33502D2145B389B07FE12E5DEB93",
-    "logicalName": "1c17",
+    "logicalName": "desk1c17",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -408,7 +408,7 @@
   },
   {
     "externalAssetId": "UUID-161B00B603554FA1BB3D2EB52F3513D5",
-    "logicalName": "1c18",
+    "logicalName": "desk1c18",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -419,7 +419,7 @@
   },
   {
     "externalAssetId": "UUID-58771DAECB814000A6F5C00B140F21F7",
-    "logicalName": "1c19",
+    "logicalName": "desk1c19",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -430,7 +430,7 @@
   },
   {
     "externalAssetId": "UUID-C200DD1DAF59422D9417998F5D17BDFA",
-    "logicalName": "1c20",
+    "logicalName": "desk1c20",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -441,7 +441,7 @@
   },
   {
     "externalAssetId": "UUID-E78C31B53FCD4A6AA0E1CCF89BFBCAC8",
-    "logicalName": "1c21",
+    "logicalName": "desk1c21",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -452,7 +452,7 @@
   },
   {
     "externalAssetId": "UUID-E9E5A1C7A9E847FB9EC38450B1BFA69B",
-    "logicalName": "1c22",
+    "logicalName": "desk1c22",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -463,7 +463,7 @@
   },
   {
     "externalAssetId": "UUID-AC3430593C8145B991623BD12DA16F24",
-    "logicalName": "1c23",
+    "logicalName": "desk1c23",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -474,7 +474,7 @@
   },
   {
     "externalAssetId": "UUID-55C41A41C50D4FAD801A37BEA59726C2",
-    "logicalName": "1c24",
+    "logicalName": "desk1c24",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -485,7 +485,7 @@
   },
   {
     "externalAssetId": "UUID-E35C0247D6754B72B9AFCECBB19AB78B",
-    "logicalName": "1c25",
+    "logicalName": "desk1c25",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -496,7 +496,7 @@
   },
   {
     "externalAssetId": "UUID-E47D876248D3439B85FE75C46FBC49EA",
-    "logicalName": "1c26",
+    "logicalName": "desk1c26",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -507,7 +507,7 @@
   },
   {
     "externalAssetId": "UUID-CCD1C3D85DC04CDFBBD29A9BED6789A2",
-    "logicalName": "1c27",
+    "logicalName": "desk1c27",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -518,7 +518,7 @@
   },
   {
     "externalAssetId": "UUID-CCD1C3D85DC04CDFEBD29A9BED6789A2",
-    "logicalName": "1c28",
+    "logicalName": "desk1c28",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -529,7 +529,7 @@
   },
   {
     "externalAssetId": "UUID-F2E47241368F4BDE9322FC52CA3FB906",
-    "logicalName": "1c29",
+    "logicalName": "desk1c29",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -540,7 +540,7 @@
   },
   {
     "externalAssetId": "UUID-06E348D1E585447BAE491920A55947C8",
-    "logicalName": "1c30",
+    "logicalName": "desk1c30",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -551,7 +551,7 @@
   },
   {
     "externalAssetId": "UUID-999C1A910A0A41E384E211123A16766F",
-    "logicalName": "1c31",
+    "logicalName": "desk1c31",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -562,7 +562,7 @@
   },
   {
     "externalAssetId": "UUID-3EB115FE14C74A37AF51E210883B406A",
-    "logicalName": "1c32",
+    "logicalName": "desk1c32",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -573,7 +573,7 @@
   },
   {
     "externalAssetId": "UUID-4756B567255145909FBA066808961ADB",
-    "logicalName": "1c33",
+    "logicalName": "desk1c33",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -584,7 +584,7 @@
   },
   {
     "externalAssetId": "UUID-AD9D782EBC9F4F0E8BC2E25F31F2D610",
-    "logicalName": "1c34",
+    "logicalName": "desk1c34",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -595,7 +595,7 @@
   },
   {
     "externalAssetId": "UUID-F6926FF1B35D44E6A9F13244560258AC",
-    "logicalName": "1c35",
+    "logicalName": "desk1c35",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -606,7 +606,7 @@
   },
   {
     "externalAssetId": "UUID-0A2FE808579E4E3CB29B837BA0CD7A57",
-    "logicalName": "1c36",
+    "logicalName": "desk1c36",
     "type": "desk",
     "assetSampleType": "event",
     "category": "fixed",
@@ -617,7 +617,7 @@
   },
   {
     "externalAssetId": "UUID-90A977C3A2E04011B8AE9A8DF4CD2A5A",
-    "logicalName": "1c37",
+    "logicalName": "desk1c37",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -628,7 +628,7 @@
   },
   {
     "externalAssetId": "UUID-EE9627497FB742F3A8087593BE1C3B10",
-    "logicalName": "1c38",
+    "logicalName": "desk1c38",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -639,7 +639,7 @@
   },
   {
     "externalAssetId": "UUID-B7BC9AE5404F4D6F9EB5035E5BA09909",
-    "logicalName": "1c39",
+    "logicalName": "desk1c39",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
@@ -650,7 +650,7 @@
   },
   {
     "externalAssetId": "UUID-72C6FE3D8F01445995E3B3ACF2291389",
-    "logicalName": "1c40",
+    "logicalName": "desk1c40",
     "type": "desk",
     "assetSampleType": "event",
     "category": "adjustable",
