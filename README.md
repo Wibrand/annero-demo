@@ -39,24 +39,12 @@ simulated yanzi gateway that sends messages from about 140 sensors into the syst
 
 [How to install the simulated solution](documents/install-simulated-solution.md)
 
+[How to setup PowerBI](documents/setup-powerbi.md)
+
 ## Contributors
 * Marie Lassborn, Yanzi
 * Oriol Piñol Piñol, Yanzi
 * Dag König, Microsoft
 * Anders Thun, Microsoft
 * Peter Bryntesson, Microsoft
-
-
-
-
-ARCHITECTURE
-
-THE SIMULATION
-A simulation is created from the above concret solution at Microsofts Office. It is stripped down somewhat. The goal for this simulation is to got this architecture up and running so other can look at it and start modify it for their use. (The goal is to have it up and running within five minutes.)
-
-This simulation creates a separate Web Job in a different App Service to emulate the sensor information from Yanzi.
-
-The installation of the simulation creates everything except the PowerBI dashboard. This need to be done manually. (A introduction to this is also included in this document.)
-
-
 
