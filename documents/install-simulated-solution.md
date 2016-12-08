@@ -44,6 +44,7 @@ If not, then use `azure account set` to change the subscription.
 4.1 Go to the **deployment** directory.
 
 4.2 Type
+
     npm install
     node deploy
 
